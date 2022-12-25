@@ -1,0 +1,38 @@
+div p {
+    color: #E0E0E0;
+}
+
+.spanText {
+    color: #E0E0E0;
+}
+
+.otherInfo {
+    color: burlywood;
+}
+
+td {
+    text-align: left;
+    padding-left: 10px;
+}
+
+.title {
+    text-align: right;
+}
+
+
+
+.space {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.threadTable {
+    border-collapse: collapse;
+}
+
+.threads {
+    margin: auto;
+    width: 80%;
+    background-color: #40311d;
+    padding: 10px;
+}
