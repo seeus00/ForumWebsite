@@ -71,7 +71,7 @@ export default function Login() {
 
     if (isLoading) {
         return <div>
-            <img src={require('../assets/loading.webp')} id="loading" alt='LOADING'></img>
+            LOADING
         </div>
     }
 

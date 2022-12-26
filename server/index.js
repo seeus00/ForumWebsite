@@ -19,10 +19,10 @@ app.use('/', (req, res) => {
     res.send("EXPRESS ROOT");
 });
 
-// app.listen(PORT, "192.168.4.56", () => {
-//     console.log("SERVER IS RUNNING ON PORT 3001");
-// });
-
-app.listen(PORT, () => {
+app.listen(PORT, "192.168.4.30", () => {
     console.log("SERVER IS RUNNING ON PORT 3001");
 });
+
+// app.listen(PORT, () => {
+//     console.log("SERVER IS RUNNING ON PORT 3001");
+// });

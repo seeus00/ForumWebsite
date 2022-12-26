@@ -16,13 +16,13 @@ interface ThreadObj {
     username: string
 }
 
-interface ThreadsObj {
+interface Threads {
     threadCount: number,
     threads: Array<ThreadObj>
 }
 
 export default function Catalog() {
-    const [threadData, setThreadData] = useState<ThreadsObj>();
+    const [threadData, setThreadData] = useState<Threads>();
 
     const navigate = useNavigate();
 
@@ -51,13 +51,13 @@ export default function Catalog() {
         if (!threadData) return "";
         return threadData.threads.map((thread, i) => {
             return (
-                <React.Fragment key={thread.id} >
+                <tbody key={thread.id} >
                     <tr>
                         <td rowSpan={3} className='index title'>
                             <span className='spanText'>{i + 1}. </span>
                         </td>
                         <td>
-                            <span className='spanText'>{thread.title}</span>
+                            <a className='spanText' href={'/thread/' + thread.id}>{thread.title}</a>
                         </td>
                     </tr>
                     <tr className='space'></tr>
@@ -69,7 +69,7 @@ export default function Catalog() {
                             <span className='otherInfo'>By {thread.username}</span>
                         </td>
                     </tr>
-                </React.Fragment>
+                </tbody>
                 
             )
         });
@@ -86,13 +86,9 @@ export default function Catalog() {
         {threadData ? 
             <div className='threads'>
                 <table className='threadTable'>
-                    <tbody className='threadBody'>
-                        {generateThreadTable()}
-                    </tbody>
-                    
+                    {generateThreadTable()}
                 </table>
             </div>
-
             :
 
             ""
