@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { AuthState, setUserLogin } from '../redux/authSlice';
 
 import './login.css'
 
 
 export default function Login() {
+    const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
     const [username, setUsername] = useState('');
@@ -18,19 +20,18 @@ export default function Login() {
     const [userId, setUserId] = useState('');
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     // const isLoggedIn: boolean = useSelector((state: AuthState) => state.isLoggedIn);
     // const userId: string = useSelector((state: AuthState) => state.userId);
 
     const checkIfLoggedIn = async () => {
         const resp = await fetch('/auth/profile');
+        const data = await resp.json();
         if (resp.ok) {
-            const data = await resp.json();
             console.log(data);
             setIsLoggedIn(true);
             setUserId(data.username);
-        }else {
-            console.log(resp);
         }
 
         setIsLoading(false);
@@ -62,12 +63,21 @@ export default function Login() {
             body: JSON.stringify(body)
         });
 
+        const respData = await resp.json();
         if (resp.ok) {
-            const respData = await resp.json();
             dispatch(setUserLogin(respData.username))
             setSuccess(true);
+        }else {
+            setError(respData);
+            setSuccess(false);
         }
     };
+
+    useEffect(() => {
+        if (!error) return;
+        
+        navigate('/error', { state: { errorMsg: error }} );
+    }, [error])
 
     if (isLoading) {
         return <div>

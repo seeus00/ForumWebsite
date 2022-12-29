@@ -2,8 +2,14 @@ div p span {
     color: #E0E0E0;
 }
 
-#firstPost {
-    text-align: left;
+.hideButton {
+    text-align: right;
+}
+
+.hiddenPost {
+    display: none;
+    margin: 0px;
+    height: 0px;
 }
 
 .space {
@@ -13,6 +19,7 @@ div p span {
 
 .postUsername {
     text-decoration: underline;
+    padding: 3px;
 }
 
 .replyButton {
@@ -23,6 +30,7 @@ div p span {
 .postBody {
     margin-top: 20px;
     font-size: 20px;
+    padding: 5px;
 }
 
 .post {

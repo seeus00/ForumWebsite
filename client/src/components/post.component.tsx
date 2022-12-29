@@ -11,7 +11,8 @@ interface PostObj {
     username: string,
     content: string,
     dateCreated: string,
-    threadId: string
+    threadId: string,
+    hidden: boolean
 }
 
 interface Posts {
@@ -47,6 +48,54 @@ export default function Post() {
         }
     }
 
+    const handlePostHide = (post: PostObj) => {
+        if (!postData?.posts) return;
+
+        const posts: Element[] = Array.from(document.getElementsByClassName("post"));
+        let currPostInd: number = posts.indexOf(posts.filter(postObj => postObj.id === post.id)[0]);
+        
+        const firstInd: number = currPostInd;
+        const targetMargin: number = parseInt((posts[currPostInd] as HTMLElement).style.marginLeft);
+
+        currPostInd++;
+        while (currPostInd < posts.length) {
+            let style = window.getComputedStyle(posts[currPostInd]);
+            let top: number = parseInt(style.getPropertyValue('margin-left'));
+
+            if (top < targetMargin || top === targetMargin) break;
+            
+            const currPostObj: PostObj = postData.posts[currPostInd];
+
+            const newType: HTMLElement = posts[currPostInd] as HTMLElement;
+            if (!post.hidden) {
+                newType.classList.add("hiddenPost");
+                // currPostObj.hidden = true;
+            }else {
+                newType.classList.remove("hiddenPost");
+                const postBody: HTMLElement = posts[currPostInd].getElementsByClassName("postBody")[0] as HTMLElement;
+                postBody.classList.remove("hiddenPost");
+            }
+            
+            posts[currPostInd].getElementsByClassName("hideButton")[0].innerHTML = (post.hidden) ? "Hide" : `Show - ${(currPostInd - 1) - firstInd} replies`;
+            // currPostObj.hidden = true;
+
+            // if (postData?.posts[currPostInd].hidden) newType.getElementsByClassName("hideButton")[0].innerHTML = "Hide";
+
+            currPostInd++;
+        }
+
+        const postBody: HTMLElement = posts[firstInd].getElementsByClassName("postBody")[0] as HTMLElement;
+        if (post.hidden) {
+            postBody.classList.remove("hiddenPost");
+        }else {
+            postBody.classList.add("hiddenPost");
+        }
+
+
+        posts[firstInd].getElementsByClassName("hideButton")[0].innerHTML = (post.hidden) ? "Hide" : `Show - ${(currPostInd - 1) - firstInd} replies`;
+        post.hidden = !post.hidden;
+    }
+
     const renderPost = (post: PostObj, marginSpace: number) => {
         const css = `
             #${post.id} {
@@ -58,13 +107,16 @@ export default function Post() {
             <div className='post' style={{ marginLeft: marginSpace }} key={post.id} id={post.id}>
                 <div className='postUsername'>
                     <span>{post.username} | {post.dateCreated}</span>
+                    <button onClick={() => { handlePostHide(post) }} className='hideButton'>Hide</button>
                     {/* <span>{post.id} | {post.dateCreated}</span> */}
 
                 </div>
                 <div className='postBody'>
                     <span>{post.content}</span>
+                    <div>
+                        <button className='replyButton' onClick={() => handleReplyButton(post)}>Reply</button>
+                    </div>
                 </div>
-                <button className='replyButton' onClick={() => handleReplyButton(post)}>Reply</button>
             </div>)
     };
 
