@@ -69,11 +69,11 @@ export default function Post() {
             const newType: HTMLElement = posts[currPostInd] as HTMLElement;
             if (!post.hidden) {
                 newType.classList.add("hiddenPost");
-                // currPostObj.hidden = true;
             }else {
                 newType.classList.remove("hiddenPost");
                 const postBody: HTMLElement = posts[currPostInd].getElementsByClassName("postBody")[0] as HTMLElement;
                 postBody.classList.remove("hiddenPost");
+                currPostObj.hidden = false;
             }
             
             posts[currPostInd].getElementsByClassName("hideButton")[0].innerHTML = (post.hidden) ? "Hide" : `Show - ${(currPostInd - 1) - firstInd} replies`;
