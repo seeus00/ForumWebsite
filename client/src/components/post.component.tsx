@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useNavigate, useParams } from 'react-router-dom';
-import { JsxElement } from 'typescript';
 
 import './post.css';
 
@@ -11,8 +10,7 @@ interface PostObj {
     username: string,
     content: string,
     dateCreated: string,
-    threadId: string,
-    hidden: boolean
+    threadId: string
 }
 
 interface Posts {
@@ -22,7 +20,7 @@ interface Posts {
 
 export default function Post() {
     const [postData, setPostData] = useState<Posts>();
-    const [replyPost, setReplyPost] = useState<PostObj>();
+    const [hiddenPosts, setHiddenPosts] = useState<boolean[]>();
 
     const params = useParams();
     const navigate = useNavigate();
@@ -39,6 +37,14 @@ export default function Post() {
         getPosts();
     }, []);
 
+    useEffect(() => {
+        if (hiddenPosts || !postData) return; 
+        let temp: boolean[] = Array<boolean>(postData?.posts.length);
+        temp.fill(false);
+
+        setHiddenPosts(temp)
+    }, [postData]);
+
     const handleReplyButton = async (post: PostObj) => {
         const resp = await fetch('/auth/profile');
         if (resp.ok) {
@@ -48,8 +54,11 @@ export default function Post() {
         }
     }
 
+    //Hiding posts is represented by an array of bools that is the same size as the postsData.posts array.
+    //The first comment that is hidden will set hiddenPosts[currPostInd] as true.
+    //That first comment will determine which post "tree" is hidden (posts can be inside of another post, and another post, etc)
     const handlePostHide = (post: PostObj) => {
-        if (!postData?.posts) return;
+        if (!postData?.posts || !hiddenPosts) return;
 
         const posts: Element[] = Array.from(document.getElementsByClassName("post"));
         let currPostInd: number = posts.indexOf(posts.filter(postObj => postObj.id === post.id)[0]);
@@ -64,36 +73,68 @@ export default function Post() {
 
             if (top < targetMargin || top === targetMargin) break;
             
-            const currPostObj: PostObj = postData.posts[currPostInd];
+            if (hiddenPosts[currPostInd]) {
+                //Hide the post body if hidden inside of another post.
+                if (posts[currPostInd].classList.contains("hiddenPost")) {
+                    posts[currPostInd].classList.remove("hiddenPost");
+                }else {
+                    posts[currPostInd].classList.add("hiddenPost");
+                }
+               
+
+                let style = window.getComputedStyle(posts[currPostInd]);
+                let currTarget: number = parseInt(style.getPropertyValue('margin-left'));
+
+                
+                //If a post is already hidden (hiding a post inside of a post), skip the hidden posts until you reach the of the post "tree".
+                currPostInd++
+                while (currPostInd < posts.length) {
+                    let style = window.getComputedStyle(posts[currPostInd]);
+                    let currTop: number = parseInt(style.getPropertyValue('margin-left'));
+
+                    if (currTop < currTarget || currTop === currTarget) break;
+                    currPostInd++;
+                }
+
+                continue;
+            }
 
             const newType: HTMLElement = posts[currPostInd] as HTMLElement;
-            if (!post.hidden) {
+            if (!hiddenPosts[firstInd]) {
                 newType.classList.add("hiddenPost");
             }else {
                 newType.classList.remove("hiddenPost");
-                const postBody: HTMLElement = posts[currPostInd].getElementsByClassName("postBody")[0] as HTMLElement;
-                postBody.classList.remove("hiddenPost");
-                currPostObj.hidden = false;
             }
-            
-            posts[currPostInd].getElementsByClassName("hideButton")[0].innerHTML = (post.hidden) ? "Hide" : `Show - ${(currPostInd - 1) - firstInd} replies`;
-            // currPostObj.hidden = true;
-
-            // if (postData?.posts[currPostInd].hidden) newType.getElementsByClassName("hideButton")[0].innerHTML = "Hide";
-
+           
+            posts[currPostInd].getElementsByClassName("hideButton")[0].innerHTML = (hiddenPosts[firstInd]) ? "Hide" : `Show - ${(currPostInd - 1) - firstInd} replies`;
             currPostInd++;
         }
 
         const postBody: HTMLElement = posts[firstInd].getElementsByClassName("postBody")[0] as HTMLElement;
-        if (post.hidden) {
+        if (hiddenPosts[firstInd]) {
             postBody.classList.remove("hiddenPost");
         }else {
             postBody.classList.add("hiddenPost");
         }
 
 
-        posts[firstInd].getElementsByClassName("hideButton")[0].innerHTML = (post.hidden) ? "Hide" : `Show - ${(currPostInd - 1) - firstInd} replies`;
-        post.hidden = !post.hidden;
+        posts[firstInd].getElementsByClassName("hideButton")[0].innerHTML = (hiddenPosts[firstInd]) ? "Hide" : `Show - ${(currPostInd - 1) - firstInd} replies`;
+        hiddenPosts[firstInd] = !hiddenPosts[firstInd];
+    }
+
+    const renderSinglePost = (post: PostObj) => {
+        return (
+            <div className='firstSinglePost' key={post.id} id={post.id}>
+                <div className='firstPostUsername'>
+                    <span>{post.username} | {post.dateCreated}</span>
+                </div>
+                <div className='firstPostBody'>
+                    <span>{post.content}</span>
+                    <div>
+                        <button className='replyButton' onClick={() => handleReplyButton(post)}>Reply</button>
+                    </div>
+                </div>
+            </div>)
     }
 
     const renderPost = (post: PostObj, marginSpace: number) => {
@@ -121,16 +162,18 @@ export default function Post() {
     };
 
     const renderAllPosts = () => {
-        if (!postData) return "";
+        if (!postData || postData.posts.length == 1) return "";
+
 
         //Size to go up by
-        const marginSpace = 40;
+        const marginSpace = 70;
 
-        let currMargin: number = 0;
+        let currMargin: number = -marginSpace;
         let currPostElements = [];
         let currPosts: PostObj[] = postData.posts.slice(1);
 
         let visited: PostObj[] = [];
+
         let stack = [postData.posts[0]];
 
         while (stack.length > 0) {
@@ -161,6 +204,8 @@ export default function Post() {
             visited.push(topPost);
         }
 
+        currPostElements = currPostElements.slice(1);
+
         return currPostElements;
     }
 
@@ -169,8 +214,15 @@ export default function Post() {
         return (<div><span>NO POSTS</span></div>)
     }else { 
         return (<div>
-            {/* <div className='space'></div> */}
             <div className='posts'>
+                <div className='firstPost'>
+                    {renderSinglePost(postData.posts[0])}
+                </div>
+
+                <div className='space'></div>
+                <div className='space'></div>
+                <div className='space'></div>
+
                 {renderAllPosts()}
             </div>
             {/* Render original(first) poster*/}

@@ -142,7 +142,10 @@ router.post('/createThread', checkAuth, async (req, res) => {
                     const postUsername = userInfo.username;
                     const postContent = threadContent;
                     const date = new Date().toLocaleString();
-        
+                    
+
+                    postsDb.query(`CREATE TAB`)
+
                     postsDb.query(`CREATE TABLE \`${postId}\` (PostId TEXT, ParentId TEXT, PostUsername TEXT, PostContent TEXT, Date TEXT)`, 
                         (err, result) => {
                             if (err) {

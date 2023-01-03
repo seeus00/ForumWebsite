@@ -2,36 +2,10 @@ div p span {
     color: #E0E0E0;
 }
 
-#firstPost {
-    text-align: left;
-}
-
-.space {
-    margin-top: 100px;
-    margin-bottom: 10px;
-}
-
-.postUsername {
-    text-decoration: underline;
-}
-
 .replyButton {
     margin-top: 10px;
     text-decoration: underline;
 }
 
-.postBody {
-    margin-top: 20px;
-    font-size: 20px;
-}
 
-.post {
-    /* margin-left: 10px; */
-    background-color: bisque;
-    margin-bottom: 10px;
-    white-space: pre-wrap;
-    text-align: left;
-    margin-top: 20px;
-    margin-left: 40px;
-    margin-right: 40px;
-}
+

@@ -14,12 +14,13 @@ div p span {
 
 .space {
     margin-top: 100px;
-    margin-bottom: 10px;
+    margin-bottom: 100px;
 }
 
 .postUsername {
-    text-decoration: underline;
     padding: 3px;
+    font-size: 12px;
+    color: gray;
 }
 
 .replyButton {
@@ -28,21 +29,51 @@ div p span {
 }
 
 .postBody {
-    margin-top: 20px;
-    font-size: 20px;
+    /* margin-top: 20px; */
+    font-size: 15px;
     padding: 5px;
-}
-
-.post {
-    /* margin-left: 10px; */
-    background-color: bisque;
-    margin-bottom: 10px;
     white-space: pre-wrap;
 }
 
-.posts {
+.post {
+    background-color: bisque;
+    margin-bottom: 10px;
+    white-space: pre-wrap;
     text-align: left;
+    border-style: solid;
+    border-color: gray;
+}
+
+
+.posts {
+    border-style: solid;
+    background-color: darkslategrey;
+    margin: auto;
     margin-top: 20px;
-    margin-left: 40px;
-    margin-right: 40px;
+    width: 80%;
+}
+
+.hideButton {
+    margin-left: 5px;
+}
+
+.firstPostUsername {
+    color: gray;
+    font-size: 15px;
+}
+
+.firstSinglePost {
+    padding: 5px;
+    font-size: 20px;
+}
+
+.firstPost {
+    background-color: #E0E0E0;
+    border-style: solid;
+    border-color: rgb(1, 102, 75);
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+    text-align: left;
+    border-style: solid;
+   
 }
