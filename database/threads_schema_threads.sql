@@ -1,0 +1,54 @@
+-- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
+--
+-- Host: localhost    Database: threads_schema
+-- ------------------------------------------------------
+-- Server version	8.0.31
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `threads`
+--
+
+DROP TABLE IF EXISTS `threads`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `threads` (
+  `threadId` text NOT NULL,
+  `threadTitle` text NOT NULL,
+  `threadContent` text NOT NULL,
+  `date` text NOT NULL,
+  `creatorId` text NOT NULL,
+  `creatorName` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `threads`
+--
+
+LOCK TABLES `threads` WRITE;
+/*!40000 ALTER TABLE `threads` DISABLE KEYS */;
+INSERT INTO `threads` VALUES ('b8db2c10-208b-4e1d-97b7-4ed1cc4948fd','Why I love zyzz','1. Zyzz has a big penis\n2. Zyzz takes steroids --> shrunk his penis\n3. Zyzz has no nipple hairs\n\nI HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | I HATE NIGGERS | ','12/25/2022, 6:26:34 PM','28ab9c0d-4e13-4e4c-993b-22de5f00788e','nigman123'),('fb8e9d1e-5a23-43ba-811a-fd15a0a3907b','dd','add','12/25/2022, 7:52:18 PM','28ab9c0d-4e13-4e4c-993b-22de5f00788e','nigman123'),('7a3f0389-21df-46fd-b5ab-108e145f59ff','fuck u','qweeqwe','12/25/2022, 7:57:22 PM','28ab9c0d-4e13-4e4c-993b-22de5f00788e','nigman123'),('ed9310bb-13a0-4ca7-b5e9-2993b4db25a8','A reminder that u r a nigger','You are a nigger. That is all there is to discuss.','12/30/2022, 4:31:37 PM','dc5f8f44-c579-416c-af2f-36f3b99473da','NIGGER_FAGIT');
+/*!40000 ALTER TABLE `threads` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-12-30 21:51:20
